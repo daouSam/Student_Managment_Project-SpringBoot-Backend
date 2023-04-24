@@ -1,6 +1,8 @@
 package com.example.student_management.model;
 
+
 import com.example.student_management.dto.UserDto;
+import com.example.student_management.enums.UserRole;
 
 import javax.persistence.*;
 
@@ -18,13 +20,16 @@ public class User {
 
     private String name;
 
+    private UserRole role;
+
     public User() {
     }
 
-    public User(String email, String password, String name) {
+    public User(String email, String password, String name, UserRole role) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.role = role;
     }
 
     public Long getId() {
@@ -52,7 +57,7 @@ public class User {
     }
 
     public UserDto mapUsertoUserDto() {
-        return new UserDto(id, email, name);
+        return new UserDto(id, email, name, role);
     }
 
     public String getName() {
@@ -63,4 +68,11 @@ public class User {
         this.name = name;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.student_management.dto;
 
-
 import javax.validation.constraints.NotBlank;
 
 public class SignupRequest {

@@ -9,5 +9,7 @@ public interface UserService {
 
      Boolean hasUserWithEmail(String email);
 
+     UserDto getUser(Long userId);
+
 
 }

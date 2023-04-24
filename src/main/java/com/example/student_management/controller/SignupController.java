@@ -1,6 +1,5 @@
 package com.example.student_management.controller;
 
-
 import com.example.student_management.dto.SignupRequest;
 import com.example.student_management.dto.UserDto;
 import com.example.student_management.service.user.UserService;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 
 
 @RestController
@@ -20,7 +20,7 @@ public class SignupController {
     UserService userService;
 
     @PostMapping({"/sign-up"})
-    public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) throws Exception {
+    public ResponseEntity<?> signupUser(@RequestBody(required = true) @Valid SignupRequest signupRequest) throws Exception {
 
         if (userService.hasUserWithEmail(signupRequest.getEmail()))
             return new ResponseEntity<>("User already exists", HttpStatus.NOT_ACCEPTABLE);

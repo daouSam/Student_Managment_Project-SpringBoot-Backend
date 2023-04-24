@@ -1,13 +1,13 @@
 package com.example.student_management.controller;
 
 import com.example.student_management.dto.AuthenticationRequest;
-import com.example.student_management.dto.AuthenticationResponse;
 import com.example.student_management.model.User;
 import com.example.student_management.repository.UserRepo;
 import com.example.student_management.service.jwt.UserDetailsServiceImpl;
 import com.example.student_management.service.user.UserService;
-import com.example.student_management.util.JwtUtil;
+import com.example.student_management.utils.JwtUtil;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,7 +43,7 @@ public class AuthenticationController {
     public static final String HEADER_STRING = "Authorization";
 
     @PostMapping({"/authenticate"})
-    public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException, JSONException, ServletException {
+    public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException, JSONException, ServletException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {
@@ -51,7 +51,7 @@ public class AuthenticationController {
         }
         catch (DisabledException disabledException){
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "User Is Not Activated");
-            return null;
+            return;
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
@@ -60,10 +60,13 @@ public class AuthenticationController {
 
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return new AuthenticationResponse(jwt);
-
+        response.getWriter().write(new JSONObject()
+                .put("userId", user.getId())
+                .put("role", user.getRole())
+                .toString()
+        );
+        response.addHeader("Access-Control-Expose-Headers", "Authorization");
+        response.addHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header");
+        response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
     }
-
-
-
 }

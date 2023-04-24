@@ -1,4 +1,4 @@
-package com.example.student_management.util;
+package com.example.student_management.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

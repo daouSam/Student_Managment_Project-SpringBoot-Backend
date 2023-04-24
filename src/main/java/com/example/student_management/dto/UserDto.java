@@ -1,5 +1,7 @@
 package com.example.student_management.dto;
 
+import com.example.student_management.enums.UserRole;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UserDto {
 
@@ -7,10 +9,13 @@ public class UserDto {
     private String email;
     private String name;
 
-    public UserDto(Long id, String email, String name) {
+    private UserRole role;
+
+    public UserDto(Long id, String email, String name, UserRole role) {
         this.id = id;
         this.email = email;
         this.name = name;
+        this.role = role;
     }
 
     public Long getId() {
@@ -36,5 +41,14 @@ public class UserDto {
     public void setName(String name) {
         this.name = name;
     }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
 
 }
