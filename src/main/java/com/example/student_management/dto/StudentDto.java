@@ -15,4 +15,6 @@ public class StudentDto {
 
     private Long userid;
 
+    private String postedBy;
+
 }

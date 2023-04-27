@@ -1,5 +1,6 @@
 package com.example.student_management.model;
 
+import com.example.student_management.dto.StudentDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -66,5 +67,16 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public StudentDto getStudentDto(){
+        StudentDto studentDto = new StudentDto();
+        studentDto.setId(id);
+        studentDto.setName(name);
+        studentDto.setFatherName(fatherName);
+        studentDto.setMotherName(motherName);
+        studentDto.setUserid(user.getId());
+        studentDto.setPostedBy(user.getName());
+        return studentDto;
     }
 }

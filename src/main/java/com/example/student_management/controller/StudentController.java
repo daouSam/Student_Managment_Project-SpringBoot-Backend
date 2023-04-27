@@ -18,7 +18,7 @@ public class StudentController {
     public GeneralResponse addStudent(@RequestBody StudentDto studentDto, @PathVariable Long userId) {
         GeneralResponse response = new GeneralResponse();
         try {
-            return studentService.addStudent(studentDto,userId);
+            return studentService.addStudent(studentDto, userId);
         } catch (Exception e) {
             response.setMessage("Sorry something went wrong!");
             response.setStatus(HttpStatus.BAD_REQUEST);
@@ -26,5 +26,58 @@ public class StudentController {
         return response;
     }
 
+    @GetMapping("/students")
+    public GeneralResponse getAllStudents() {
+        GeneralResponse response = new GeneralResponse();
+        try {
+            response.setData(studentService.getAllStudents());
+            response.setMessage("Students fetched successfully.");
+            response.setStatus(HttpStatus.OK);
+        } catch (Exception e) {
+            response.setStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Something went wrong!");
+        }
+        return response;
+    }
+
+    @GetMapping("studentById/{studentId}")
+    public GeneralResponse getStudentById(@PathVariable Long studentId) {
+        GeneralResponse response = new GeneralResponse();
+        try {
+            response.setData(studentService.getStudentById(studentId));
+            response.setStatus(HttpStatus.OK);
+            response.setMessage("Student fetched successfully");
+        } catch (Exception e) {
+            response.setStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Something went wrong");
+        }
+        return response;
+    }
+
+    @PutMapping("/student/{studentId}")
+    public GeneralResponse updateStudent(@PathVariable Long studentId, @RequestBody StudentDto studentDto) {
+        GeneralResponse response = new GeneralResponse();
+        try {
+            return studentService.updateStudent(studentId, studentDto);
+        } catch (Exception e) {
+            response.setMessage("Something went wrong");
+            response.setStatus(HttpStatus.BAD_REQUEST);
+        }
+        return response;
+    }
+
+    @DeleteMapping("student/{studentId}")
+    public GeneralResponse deleteStudent(@PathVariable Long studentId) {
+        GeneralResponse response = new GeneralResponse();
+        try {
+            studentService.deleteStudent(studentId);
+            response.setStatus(HttpStatus.OK);
+            response.setMessage("Student deleted successfully");
+        } catch (Exception e) {
+            response.setStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Something went wrong");
+        }
+        return response;
+    }
 
 }
