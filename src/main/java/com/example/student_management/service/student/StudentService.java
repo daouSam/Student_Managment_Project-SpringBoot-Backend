@@ -17,4 +17,6 @@ public interface StudentService {
     SingleStudentDto getStudentById(Long studentId);
 
     void deleteStudent(Long studentId);
+
+    List<StudentDto> searchStudentByName(String title);
 }

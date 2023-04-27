@@ -83,5 +83,9 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(studentId);
     }
 
+    @Override
+    public List<StudentDto> searchStudentByName(String title) {
+        return studentRepository.findAllByNameContaining(title).stream().map(Student::getStudentDto).collect(Collectors.toList());
+    }
 
 }

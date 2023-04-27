@@ -80,4 +80,18 @@ public class StudentController {
         return response;
     }
 
+    @GetMapping("/search/{title}")
+    public GeneralResponse searchStudentByName(@PathVariable String title){
+        GeneralResponse response = new GeneralResponse();
+        try {
+            response.setData(studentService.searchStudentByName(title));
+            response.setMessage("Students fetched successfully");
+            response.setStatus(HttpStatus.OK);
+        } catch (Exception e){
+            response.setStatus(HttpStatus.BAD_REQUEST);
+            response.setMessage("Something went wrong");
+        }
+        return response;
+    }
+
 }
