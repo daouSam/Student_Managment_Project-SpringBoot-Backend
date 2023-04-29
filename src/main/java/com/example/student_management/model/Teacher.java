@@ -1,5 +1,6 @@
 package com.example.student_management.model;
 
+import com.example.student_management.dto.TeacherDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -54,5 +55,15 @@ public class Teacher {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public TeacherDto getTeacherDto(){
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setId(id);
+        teacherDto.setName(name);
+        teacherDto.setDepartment(department);
+        teacherDto.setUserId(user.getId());
+        teacherDto.setPostedBy(user.getName());
+        return teacherDto;
     }
 }

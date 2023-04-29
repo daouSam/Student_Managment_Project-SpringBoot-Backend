@@ -8,6 +8,10 @@ public class TeacherDto {
 
     private String department;
 
+    private Long userId;
+
+    private String postedBy;
+
 
     public Long getId() {
         return id;
@@ -31,5 +35,21 @@ public class TeacherDto {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getPostedBy() {
+        return postedBy;
+    }
+
+    public void setPostedBy(String postedBy) {
+        this.postedBy = postedBy;
     }
 }
